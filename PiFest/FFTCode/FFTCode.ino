@@ -40,8 +40,6 @@ void setup() {
 }
  
 void loop() {
-  // Waveform reading (5ms)
-  //  digitalWrite(16, HIGH);
   digitalWrite(25, HIGH);               // Built-in LED lights up during sampling
   for (int i = 0; i < samples; i++) {
     wave_R[i] = analogRead(R_IN);       // Waveform data acquisition (fs: 4096) For Both the inout L and R.
@@ -49,7 +47,6 @@ void loop() {
     delayMicroseconds(21);              // Sampling cycle adjustment (1 cycle 39us)
   }                                     // (5ms)
   digitalWrite(25, LOW);
-  //  digitalWrite(16, LOW);
  
   // FFT calculation data preparation(1.7ms)
   for (int i = 0; i < samples; i++) {
@@ -59,7 +56,6 @@ void loop() {
     vImag_L[i] = 0;
   }
  
-  // FFTの計算  (33ms)
   FFT.Windowing(vReal_R, samples, FFT_WIN_TYP_HAMMING, FFT_FORWARD); // Window function (hamming) application
   FFT.Windowing(vReal_L, samples, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
  
@@ -158,10 +154,6 @@ void showOthers() {                           // Graph modification (scale and o
   u8g2.setCursor(0, 30); u8g2.print("-20");   
   u8g2.setCursor(0, 45); u8g2.print("-40");   
  
-  // LR表示
-  //  u8g2.setFont(u8g2_font_6x10_tf);            // With a slightly larger font
-  //  u8g2.setCursor(0, 4); u8g2.print("L");      // Channel display
-  //  u8g2.setCursor(121, 4); u8g2.print("R");    
   u8g2.setFont(u8g2_font_crox1cb_tf);         // With a slightly luxurious font
   u8g2.setCursor(0, 3); u8g2.print("L");      // Channel display
   u8g2.setCursor(119, 3); u8g2.print("R");    
